@@ -1,6 +1,6 @@
 import { useAccount, useSignMessage } from "wagmi";
 import { useEffect, useState } from "react";
-import { Account, Connect, NetworkSwitcher } from "./components";
+import { Account, Connect } from "./components";
 import { verifyMessage } from "ethers/lib/utils";
 import { SignMessageArgs } from "@wagmi/core";
 
@@ -46,9 +46,6 @@ export function App() {
     //console.log(tokenmessage);
     fetch(`${baseUrl}/request`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
       body: JSON.stringify(tokenmessage),
     })
       .then((response) => response.json())
