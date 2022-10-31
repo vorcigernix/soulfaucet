@@ -8,28 +8,35 @@ export function App() {
   const { isConnected, address } = useAccount();
   const [isConnecting, setIsConnecting] = useState(isConnected);
   const [isEligible, setIsEligible] = useState(false);
-  const [isFetching, setIsFetching] = useState(false);
+  const [isFetching, setIsFetching] = useState("none");
   const [network, setNetwork] = useState("goerli");
   const baseUrl = "https://faucet-api.ethbrno.cz";
 
   const getEligibilityData = async () => {
     if (!address) return;
-    setIsFetching(true);
+    setIsFetching("eligibility");
     try {
-      const apiResponse = await fetch(`${baseUrl}/lookup?addr=${address}`);
+      const apiResponse = await fetch(`${baseUrl}/lookup?addr=${address}`, {
+        method: "GET",
+        mode: "cors",
+      });
       const res = await apiResponse.json();
       if (res?.tokenId) setIsEligible(true);
       else setIsEligible(false);
     } catch (error) {
       console.error(error);
     }
-    setIsFetching(false);
+    setIsFetching("none");
   };
 
   const { data, error, isLoading, signMessage } = useSignMessage({
     onSuccess(data, variables) {
       //console.log(variables.message);
       getTokenData(data, String(variables.message));
+    },
+    onError(error) {
+      console.log(error);
+      setIsFetching("none");
     },
   });
 
@@ -50,20 +57,22 @@ export function App() {
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
       },
-      mode: 'cors',
+      mode: "cors",
       body: JSON.stringify(tokenmessage),
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("Success:", data);
+        //console.log("Success:", data);
+        setIsFetching("none");
       })
       .catch((error) => {
         console.error("Error:", error);
+        setIsFetching("none");
       });
   };
 
   function initiateTokenFall(): any {
-    setIsFetching(true);
+    setIsFetching("tokens");
     const message = {
       "id": "ethbrno-sbt-faucet",
       "network": network,
@@ -140,25 +149,29 @@ export function App() {
                     <button
                       className={isConnected ? `whitebtn` : `greenbtn`}
                       onClick={() => setIsConnecting(true)}
-                      disabled={isFetching || isConnected}
+                      disabled={isFetching != "none" || isConnected}
                     >
                       Connect
                     </button>
                     <button
-                      className={isEligible ? `whitebtn` : `redbtn`}
+                      className={isEligible || !isConnected
+                        ? `whitebtn`
+                        : `redbtn`}
                       onClick={() => {
                         revalidate;
                       }}
-                      disabled={isFetching || isEligible}
+                      disabled={isFetching != "none" || isEligible}
                     >
                       Validate
                     </button>
                     <button
                       className={isEligible ? `greenbtn` : `whitebtn`}
                       onClick={() => initiateTokenFall()}
-                      disabled={isFetching}
+                      disabled={isFetching == "tokens"}
                     >
-                      Get Tokens
+                      {isFetching == "tokens"
+                        ? ("Sending Tokens...")
+                        : ("Get Tokens")}
                     </button>
                   </div>
                 </div>
