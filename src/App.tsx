@@ -136,6 +136,7 @@ export function App() {
                   <button
                     className={isConnected ? `whitebtn` : `greenbtn`}
                     onClick={() => setIsConnecting(true)}
+                    disabled={isFetching || isConnected}
                   >
                     Connect
                   </button>
@@ -144,7 +145,7 @@ export function App() {
                     onClick={() => {
                       revalidate;
                     }}
-                    disabled={isFetching}
+                    disabled={isFetching || isEligible}
                   >
                     Validate
                   </button>
