@@ -47,9 +47,10 @@ export function App() {
     //console.log(JSON.stringify(tokenmessage));
     fetch(`${baseUrl}/request`, {
       method: "POST",
-      // headers: {
-      //   "Content-Type": "application/json",
-      // },
+      headers: {
+        "Content-Type": "application/json",
+      },
+      mode: 'no-cors',
       body: JSON.stringify(tokenmessage),
     })
       .then((response) => response.json())
