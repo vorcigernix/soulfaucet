@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    body {
+        @apply text-gray-900 bg-white;
+    }
+
+    .title-font {
+        font-family: 'Ubuntu Mono', monospace;
+    }
+
+    .greenbtn {
+        @apply px-6 h-12 uppercase font-semibold tracking-wider border-2 border-black bg-teal-400 text-black hover:border-teal-400 disabled:opacity-10;
+    }
+
+    .whitebtn {
+        @apply px-6 h-12 uppercase font-semibold tracking-wider border border-slate-200 text-slate-900 hover:border-teal-400 disabled:opacity-10;
+    }
+    .redbtn {
+        @apply px-6 h-12 uppercase font-semibold tracking-wider border-2 border-black bg-red-400 text-black hover:border-red-400 disabled:opacity-10;
+    }
+}
