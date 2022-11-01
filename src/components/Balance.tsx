@@ -2,6 +2,7 @@ export interface BalanceType {
   balance: number;
   network: string;
   quota: {
+    batch: any;
     quota: number;
     used: number;
   };
