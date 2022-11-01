@@ -10,7 +10,7 @@ export interface BalanceType {
 
 export function Balance(props: BalanceType[]) {
   const nets = Object.values(props);
-  console.log(nets);
+  //console.log(nets);
 
   return (
     <>

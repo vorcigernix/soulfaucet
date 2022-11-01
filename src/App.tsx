@@ -93,7 +93,7 @@ export function App() {
       return b.network==network;
     });
     //console.log(filteredBalance[0].quota.batch);
-    return (`Get ${filteredBalance[0].quota.batch} Tokens`);
+    return (`Get ${filteredBalance[0]?.quota?.batch} Tokens`);
   }
 
   useEffect(() => {
