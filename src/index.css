@@ -12,7 +12,7 @@
     }
 
     .greenbtn {
-        @apply px-6 h-12 uppercase font-semibold tracking-wider border-2 border-black bg-[#3441c0] text-white hover:border-[#3441c0] disabled:opacity-10;
+        @apply px-6 h-12 uppercase font-semibold tracking-wider border-2 border-[#3441c0] bg-[#3441c0] text-white hover:border-white disabled:opacity-10;
     }
 
     .whitebtn {

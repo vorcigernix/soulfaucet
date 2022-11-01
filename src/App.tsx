@@ -90,21 +90,31 @@ export function App() {
     getEligibilityData();
   }, [address]);
 
-  function revalidate() {
-  }
-
-  //console.log(isEligible);
-
   return (
     <>
       <section>
         <div className="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center opacity-70">
           <div className="lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center">
-            <h1 className="title-font sm:text-4xl text-3xl mb-4 font-medium">
-              Soulbound
-              <br />
-              <p className="font-bold text-[#3441c0]">ETH Faucet</p>
-            </h1>
+            <div className="flex flex-col">
+              <img className="w-48 -ml-2" src="logo.svg" />
+
+              <h1 className="title-font sm:text-4xl text-3xl mb-4 font-medium text-white">
+                Soulbound
+                <br />
+                <p className="font-bold text-[#3441c0]">ETH Faucet</p>
+              </h1>
+            </div>
+            {!isEligible && isConnected && (
+              <div className="my-4 text-xs">
+                We cannot find a Soubound token in your wallet.{" "}
+                <a
+                  className="font-bold underline"
+                  href="https://mint.ethbrno.cz/"
+                >
+                  Mint yours here.
+                </a>
+              </div>
+            )}
             {isConnected && (
               <div className="flex items-baseline my-6">
                 <div className="space-x-6 flex text-sm font-medium">
@@ -161,17 +171,6 @@ export function App() {
                       Connect
                     </button>
                     <button
-                      className={isEligible || !isConnected
-                        ? `whitebtn`
-                        : `redbtn`}
-                      onClick={() => {
-                        revalidate;
-                      }}
-                      disabled={isFetching != "none" || isEligible}
-                    >
-                      Validate
-                    </button>
-                    <button
                       className={isEligible ? `greenbtn` : `whitebtn`}
                       onClick={() => initiateTokenFall()}
                       disabled={isFetching == "tokens"}
@@ -188,17 +187,6 @@ export function App() {
                   <Connect />
                 </div>
               )}
-            {!isEligible && (
-              <div className="my-4 text-xs">
-                We cannot find a Soubound token in your wallet.{" "}
-                <a
-                  className="font-bold underline"
-                  href="https://mint.ethbrno.cz/"
-                >
-                  Mint yours here.
-                </a>
-              </div>
-            )}
           </div>
           <div className="lg:max-w-lg lg:w-full md:w-1/3 w-5/6 flex justify-center">
             <img
