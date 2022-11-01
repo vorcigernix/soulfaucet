@@ -106,10 +106,25 @@ export function App() {
               </h1>
             </div>
             {!isEligible && isConnected && (
-              <div className="my-4 text-xs">
+              <div className="my-4 flex title-font">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-6 h-6 mr-1"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1121.75 8.25z"
+                  />
+                </svg>
+
                 We cannot find a Soubound token in your wallet.{" "}
                 <a
-                  className="font-bold underline"
+                  className="font-bold underline ml-1"
                   href="https://mint.ethbrno.cz/"
                 >
                   Mint yours here.
@@ -151,7 +166,7 @@ export function App() {
             {!isEligible
               ? (
                 <>
-                  <p className="mb-8 leading-relaxed">
+                  <p className="mb-8 leading-relaxed title-font">
                     If you own a Soulbound token you can ask for up to 200 ETH
                     for either Goerli and Sepolia testnets. This should be
                     enough not only for a development purposes, but also for
@@ -160,7 +175,7 @@ export function App() {
                     50 ETH and there is a request cooldown for 5 hours to avoid
                     misuse.
                   </p>
-                  <p className="mb-8 leading-relaxed">
+                  <p className="mb-8 leading-relaxed title-font">
                     Connect you wallet in order to check for Soulbound token
                     please.
                   </p>
