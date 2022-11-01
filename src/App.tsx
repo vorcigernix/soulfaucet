@@ -1,6 +1,7 @@
 import { useAccount, useSignMessage } from "wagmi";
 import { useEffect, useState } from "react";
-import { Account, Connect } from "./components";
+import { Balance, Connect } from "./components";
+import { BalanceType } from "./components";
 import { verifyMessage } from "ethers/lib/utils";
 import { SignMessageArgs } from "@wagmi/core";
 
@@ -10,6 +11,7 @@ export function App() {
   const [isEligible, setIsEligible] = useState(false);
   const [isFetching, setIsFetching] = useState("none");
   const [network, setNetwork] = useState("goerli");
+  const [balances, setBalances] = useState<BalanceType[]>([]);
   const baseUrl = "https://faucet-api.ethbrno.cz";
 
   const getEligibilityData = async () => {
@@ -21,6 +23,8 @@ export function App() {
         mode: "cors",
       });
       const res = await apiResponse.json();
+      //console.log(res);
+      setBalances(res?.balances);
       if (res?.tokenId) setIsEligible(true);
       else setIsEligible(false);
     } catch (error) {
@@ -133,15 +137,18 @@ export function App() {
                 </div>
               </div>
             )}
-            {}
-            <p className="mb-8 leading-relaxed">
-              If you own a Soulbound token you can ask for up to 200 ETH for
-              either Goerli and Sepolia testnets. This should be enough not only
-              for a development purposes, but also for prepaid gas transactions
-              for your testing users. These tokens have no real monetary value.
-              Every request grants you 50 ETH and there is a request cooldown
-              for 5 hours to avoid misuse.
-            </p>
+            {!isEligible
+              ? (
+                <p className="mb-8 leading-relaxed">
+                  If you own a Soulbound token you can ask for up to 200 ETH for
+                  either Goerli and Sepolia testnets. This should be enough not
+                  only for a development purposes, but also for prepaid gas
+                  transactions for your testing users. These tokens have no real
+                  monetary value. Every request grants you 50 ETH and there is a
+                  request cooldown for 5 hours to avoid misuse.
+                </p>
+              )
+              : <Balance {...balances} />}
             {!isConnecting || isConnected
               ? (
                 <div className="mb-4 text-sm font-medium">
