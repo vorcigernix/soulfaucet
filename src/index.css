@@ -16,7 +16,7 @@
     }
 
     .whitebtn {
-        @apply px-6 h-12 uppercase font-semibold tracking-wider border border-slate-200 text-slate-900 hover:border-[#3441c0] disabled:opacity-10;
+        @apply px-6 h-12 uppercase font-semibold tracking-wider border border-slate-200 text-slate-900 hover:border-[#3441c0] disabled:opacity-10 hover:bg-white/30;
     }
 
     .redbtn {

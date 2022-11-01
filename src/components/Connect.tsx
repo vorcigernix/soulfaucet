@@ -22,7 +22,7 @@ export function Connect() {
             .filter((x) => x.ready && x.id !== connector?.id)
             .map((x) => (
               <button
-                className="whitebtn hover:border-teal-400"
+                className="whitebtn"
                 key={x.id}
                 onClick={() => connect({ connector: x })}
               >

@@ -1,6 +1,6 @@
 import { useAccount, useSignMessage } from "wagmi";
 import { useEffect, useState } from "react";
-import { Balance, Connect } from "./components";
+import { Balance, Connect, LoadingIndicator } from "./components";
 import { BalanceType } from "./components";
 import { verifyMessage } from "ethers/lib/utils";
 import { SignMessageArgs } from "@wagmi/core";
@@ -14,7 +14,7 @@ export function App() {
   const [balances, setBalances] = useState<BalanceType[]>([]);
   const baseUrl = "https://faucet-api.ethbrno.cz";
 
-  const getEligibilityData = async () => {
+  const getBalanceData = async () => {
     if (!address) return;
     setIsFetching("eligibility");
     try {
@@ -67,6 +67,7 @@ export function App() {
       .then((response) => response.json())
       .then((data) => {
         //console.log("Success:", data);
+        getBalanceData();
         setIsFetching("none");
       })
       .catch((error) => {
@@ -87,7 +88,7 @@ export function App() {
   }
 
   useEffect(() => {
-    getEligibilityData();
+    getBalanceData();
   }, [address]);
 
   return (
@@ -165,7 +166,19 @@ export function App() {
                   </p>
                 </>
               )
-              : <Balance {...balances} />}
+              : (
+                <>
+                  {isFetching == "tokens"
+                    ? <LoadingIndicator />
+                    : <Balance {...balances} />}
+
+                  <div className="w-full flex justify-end items-end">
+                    <button className="mr-4" onClick={() => getBalanceData()}>
+                      ⟳ Refresh
+                    </button>
+                  </div>
+                </>
+              )}
             {!isConnecting || isConnected
               ? (
                 <div className="mb-4 text-sm font-medium">
