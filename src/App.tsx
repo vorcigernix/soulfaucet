@@ -149,14 +149,21 @@ export function App() {
             )}
             {!isEligible
               ? (
-                <p className="mb-8 leading-relaxed">
-                  If you own a Soulbound token you can ask for up to 200 ETH for
-                  either Goerli and Sepolia testnets. This should be enough not
-                  only for a development purposes, but also for prepaid gas
-                  transactions for your testing users. These tokens have no real
-                  monetary value. Every request grants you 50 ETH and there is a
-                  request cooldown for 5 hours to avoid misuse.
-                </p>
+                <>
+                  <p className="mb-8 leading-relaxed">
+                    If you own a Soulbound token you can ask for up to 200 ETH
+                    for either Goerli and Sepolia testnets. This should be
+                    enough not only for a development purposes, but also for
+                    prepaid gas transactions for your testing users. These
+                    tokens have no real monetary value. Every request grants you
+                    50 ETH and there is a request cooldown for 5 hours to avoid
+                    misuse.
+                  </p>
+                  <p className="mb-8 leading-relaxed">
+                    Connect you wallet in order to check for Soulbound token
+                    please.
+                  </p>
+                </>
               )
               : <Balance {...balances} />}
             {!isConnecting || isConnected
@@ -171,7 +178,9 @@ export function App() {
                       Connect
                     </button>
                     <button
-                      className={isEligible ? `greenbtn` : `whitebtn`}
+                      className={isEligible && isConnected
+                        ? `greenbtn`
+                        : `hidden`}
                       onClick={() => initiateTokenFall()}
                       disabled={isFetching == "tokens"}
                     >
