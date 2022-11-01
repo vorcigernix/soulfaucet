@@ -87,6 +87,15 @@ export function App() {
     signMessage(msg);
   }
 
+  function getBtnText(network: string): import("react").ReactNode {
+    const balanceVals = Object.values(balances);
+    const filteredBalance = balanceVals.filter((b) => {
+      return b.network==network;
+    });
+    //console.log(filteredBalance[0].quota.batch);
+    return (`Get ${filteredBalance[0].quota.batch} Tokens`);
+  }
+
   useEffect(() => {
     getBalanceData();
   }, [address]);
@@ -214,7 +223,7 @@ export function App() {
                     >
                       {isFetching == "tokens"
                         ? ("Sending Tokens...")
-                        : ("Get Tokens")}
+                        : (getBtnText(network))}
                     </button>
                   </div>
                 </div>
